@@ -9,6 +9,7 @@ void recurse(unordered_map<int,int>&hash,int places,vector<int>&s){
         int left=places-1;
         recurse(hash,left,s);
         hash[x.first]++;
+        s.
     }
 }
 int main(){

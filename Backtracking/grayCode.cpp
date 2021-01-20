@@ -1,37 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
-vector<string>solve(int num,vector<string>bin){
+vector<string>solve(int num){
     if(num==1){
-        bin.push_back("0");
-        bin.push_back("1");
-        return bin;
+        vector<string>temp;
+        temp.push_back("0");
+        temp.push_back("1");
+        return temp;
     }
-    int newnum=num-1;
-    vector<string>New=solve(newnum,bin);
-    vector<string>New2;
-    int len=New.size();
-    vector<string>B;
-    for(int iter=0;iter<len;iter++){
-        string s1="0"+New[iter];
-        string s2="1"+New[len-1-iter];
-        B.push_back(s1);
-        New2.push_back(s2);
+    num=num-1;
+    vector<string>main=solve(num);
+    vector<string>ans;
+    vector<string>rev;
+    int Nth=main.size();
+    for(int i=0;i<main.size();i++){
+        string s1=main[i];
+        string s2=main[Nth-i-1];
+        s1="0"+s1;
+        s2="1"+s2;
+        ans.push_back(s1);
+        rev.push_back(s2);
     }
-    for(int i=0;i<len;i++){
-        string item=New2[i];
-        B.push_back(item);
+    for(int i=0;i<rev.size();i++){
+        ans.push_back(rev[i]);
     }
-    return B;
+    return ans;
 }
-
+void input(){
+    int N;
+    cin>>N;
+    vector<string>A;
+    A=solve(N);
+    for(string x:A)
+    cout<<x<<" ";
+}
 int main(){
-    int N=3;
-    vector<string>s;
-    vector<string>A=solve(N,s);
-    for(string x:A){
-    stringstream toint(x);
-    toint>>x;
-    cout<<x<<"\n";
-    }
+    input();
     return 0;
 }
