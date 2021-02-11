@@ -1,5 +1,6 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
+unordered_map<int,int>choices;
 int grid[9][9] = {  {3, 0, 6, 5, 0, 8, 4, 0, 0},
                     {5, 2, 0, 0, 0, 0, 0, 0, 0},
                     {0, 8, 7, 0, 0, 0, 0, 3, 1},
@@ -15,7 +16,12 @@ void display(int grid[9][9]){
         for(int j=0;j<9;j++)
             cout<<grid[i][j]<<" ";
         cout<<"\n";
-    }
+    } 
+}
+void reset(){
+    choices[1]++;choices[2]++;choices[3]++;
+    choices[4]++;choices[5]++;
+    choices[6]++;choices[7]++;choices[8]++;choices[9]++;
 }
 bool isValid(int arr[9][9],int a,int b,int pos){
     for(int iter=0;iter<9;iter++){
@@ -46,6 +52,7 @@ void solve(int grid[9][9],int i,int j){
     if(j==8){
         ni=i+1;
         nj=0;
+        reset();
     }
     else{
         ni=i;
@@ -54,14 +61,19 @@ void solve(int grid[9][9],int i,int j){
     if(grid[i][j]!=0)
     solve(grid,ni,nj);
     else {
-        for(int pos=1;pos<=9;pos++){
-            if(isValid(grid,i,j,pos)==true){
-                grid[i][j]=pos;
-                solve(grid,ni,nj);
-                grid[i][j]=0;
-            }    
+        for(auto x:choices){
+            if(choices[x.first]){
+                if(isValid(grid,i,j,x.first)){
+                    grid[i][j]=x.first;
+                    choices[x.first]--;
+                    solve(grid,ni,nj);
+                    grid[i][j]=0;
+                    choices[x.first]++;
+                }    
+            }
         }
     }
+    return;
 }
 int main(){
     solve(grid,0,0);
