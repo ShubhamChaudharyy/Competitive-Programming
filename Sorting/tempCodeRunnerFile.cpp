@@ -1,0 +1,1 @@
+quickSort(nums,pivot+1,end);
