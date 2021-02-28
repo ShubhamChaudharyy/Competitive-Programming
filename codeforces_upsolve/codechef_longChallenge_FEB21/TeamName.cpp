@@ -36,26 +36,25 @@ int main() {
             for(string g:suffix){
                 string temp=c+g;
                 if(all.count(temp)==0){
-                    int code=int(c)-97;
-                    tw++;
-                    pfcount[code]++;
-                    grp[g].push_back(c);
-                    all[temp]++;
+                    diff.push_back(temp);
                 }
             }
         }
         ll finalans=0;
-        for(auto x:grp){
-            vector<char>ic=x.second;
-            ll testW=tw;
-            for(char c:ic){ 
-                int code=int(c)-97;
-                testW=testW-pfcount[code]; 
-                pfcount[code]--;
-            }
-            finalans+=2*testW;
-            tw-=ic.size();
+        if(diff.size()==0){
+            cout<<0<<"\n";
+            continue;
         }
+        for(int i=0;i<diff.size()-1;i++){
+            for(int j=i+1;j<diff.size();j++){
+                char cpf1=diff[i][0],cpf2=diff[j][0];
+                string csuf1=diff[i].substr(1,diff[i].length()),csuf2=diff[j].substr(1,diff[j].length());
+                string tch1=cpf1+csuf2;string tch2=cpf2+csuf1;
+                if(all.count(tch1)>0 && all.count(tch2)>0)
+                    finalans+=2;
+            }
+        }
+        cout<<finalans<<"\n";
     }
 	return 0;
 }
